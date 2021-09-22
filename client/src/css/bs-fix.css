@@ -1,0 +1,8 @@
+.card,
+.badge {
+  border: none;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}

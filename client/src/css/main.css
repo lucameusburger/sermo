@@ -1,0 +1,114 @@
+@font-face {
+  font-family: 'Strawford';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/Strawford/Strawford_Roman/strawford-regular-webfont.woff');
+}
+@font-face {
+  font-family: 'Strawford';
+  font-style: bold;
+  font-weight: 600;
+  src: url('../fonts/Strawford/Strawford_Roman/strawford-medium-webfont.woff');
+}
+@font-face {
+  font-family: 'Strawford';
+  font-style: bold;
+  font-weight: 700;
+  src: url('../fonts/Strawford/Strawford_Roman/strawford-bold-webfont.woff');
+}
+@font-face {
+  font-family: 'Strawford';
+  font-style: black;
+  font-weight: 900;
+  src: url('../fonts/Strawford/Strawford_Roman/strawford-black-webfont.woff');
+}
+
+body {
+  font-family: Strawford;
+}
+
+.navbar-brand {
+  font-weight: 900;
+}
+
+.w-banner {
+  max-width: 600px;
+}
+
+.img-banner {
+  width: 100%;
+  height: calc(100vh - 128px - 24rem);
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.img-thumb {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  border-radius: 2rem;
+}
+
+.hide-text-img-thumb {
+  text-indent: 100% !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  color: transparent;
+  max-width: 2rem !important;
+  max-height: 2rem !important;
+}
+
+.img-thumb-lg {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  border-radius: 2rem;
+}
+
+.header-profile {
+  width: 100%;
+  height: 12rem;
+}
+
+.img-profile {
+  width: 7rem;
+  height: 7rem;
+  object-fit: cover;
+}
+
+.rounded-s {
+  border-top-left-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
+}
+
+.rounded-e {
+  border-top-right-radius: 0.25rem !important;
+  border-bottom-right-radius: 0.25rem !important;
+}
+
+.no-style {
+  text-decoration: none !important;
+}
+
+.bg-darker {
+  background-color: #18191a;
+}
+
+.btn-icn {
+  opacity: 0.66;
+  transition: all ease 0.2s;
+}
+
+.btn-icn:hover {
+  opacity: 1;
+}
+
+.btn-icn-liked {
+  opacity: 1;
+  transition: all ease 0.2s;
+}
+
+.btn-icn-liked:hover {
+  opacity: 0.66;
+}
