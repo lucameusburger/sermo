@@ -23,18 +23,16 @@ function Feed() {
   };
 
   return (
-    <>
-      <Container>
-        <Row>
-          <Col lg="8">
-            <ArticlesList articles={articles} />
-          </Col>
-          <Col lg="4" className="d-none d-lg-block psgfjdgs-0">
-            <MenuRight></MenuRight>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Container>
+      <Row>
+        <Col lg="8">
+          <ArticlesList articles={articles} />
+        </Col>
+        <Col lg="4" className="d-none d-lg-block psgfjdgs-0">
+          <MenuRight></MenuRight>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

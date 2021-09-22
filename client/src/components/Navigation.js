@@ -38,10 +38,10 @@ export default function Navigation() {
             align="end"
             id="nav-dropdown-dark-example"
             title={
-              <>
+              <div>
                 {user.username || 'login'}
                 <img className="img-thumb ms-2 bg-secondary hide-text-img-thumb" src={loggedImg} alt="User image" />
-              </>
+              </div>
             }
             menuVariant="dark"
           >
@@ -68,7 +68,7 @@ export default function Navigation() {
   };
 
   return (
-    <>
+    <div>
       <Navbar onLoad={handleLogged} fixed="top" bg="dark" variant="dark">
         <Container>
           <Link className="no-style" to={''}>
@@ -112,6 +112,6 @@ export default function Navigation() {
           </Col>
         </Row>
       </Navbar>
-    </>
+    </div>
   );
 }

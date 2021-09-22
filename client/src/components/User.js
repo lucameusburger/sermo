@@ -18,7 +18,7 @@ export default function User({ user = {}, mode = 'md' }) {
   }
 
   if (user == null) {
-    return <>No user found</>;
+    return 'No user found';
   }
 
   const modePost = () => {
@@ -28,7 +28,7 @@ export default function User({ user = {}, mode = 'md' }) {
         break;
       case 'profile':
         return (
-          <>
+          <div>
             <div className="mb-2">
               <Link to="profile-edit">
                 <Button variant="dark">Edit Profile</Button>
@@ -59,7 +59,7 @@ export default function User({ user = {}, mode = 'md' }) {
                 </a>
               </span>
             </p>
-          </>
+          </div>
         );
         break;
 
@@ -93,27 +93,25 @@ export default function User({ user = {}, mode = 'md' }) {
   };
 
   return (
-    <>
-      <Link to={`/users/${user._id}`} style={{ textDecoration: 'none', color: 'white' }}>
-        <Card className="mb-2" bg="dark" text="white">
-          <div className="d-flex align-items-center">
-            <img className="img-profile bg-secondary rounded-s me-3" src={defaultImg} />
-            <div>
-              <h3 className="mb-0">
-                <b>
-                  {user.firstName} {user.lastName}
-                </b>
-              </h3>
-              <div className="mb-2">
-                <span>{user.username}</span>
-                <br />
-                <span>{user.bio}</span>
-              </div>
+    <Link to={`/users/${user._id}`} style={{ textDecoration: 'none', color: 'white' }}>
+      <Card className="mb-2" bg="dark" text="white">
+        <div className="d-flex align-items-center">
+          <img className="img-profile bg-secondary rounded-s me-3" src={defaultImg} />
+          <div>
+            <h3 className="mb-0">
+              <b>
+                {user.firstName} {user.lastName}
+              </b>
+            </h3>
+            <div className="mb-2">
+              <span>{user.username}</span>
+              <br />
+              <span>{user.bio}</span>
             </div>
           </div>
-        </Card>
-        {modePost()}
-      </Link>
-    </>
+        </div>
+      </Card>
+      {modePost()}
+    </Link>
   );
 }

@@ -23,18 +23,16 @@ function Users() {
   };
 
   return (
-    <>
-      <Container>
-        <Row>
-          <Col lg="8">
-            <UsersList users={users} mode="sm" />
-          </Col>
-          <Col lg="4" className="d-none d-lg-block">
-            <MenuRight></MenuRight>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Container>
+      <Row>
+        <Col lg="8">
+          <UsersList users={users} mode="sm" />
+        </Col>
+        <Col lg="4" className="d-none d-lg-block">
+          <MenuRight></MenuRight>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

@@ -20,10 +20,10 @@ export default function SearchResults({ articles = [], users = [], comments = []
     return <CommentsList comments={comments} mode="sm" />;
   }
   return (
-    <>
+    <div>
       {articlesResult()}
       {usersResult()}
       {commentsResult()}
-    </>
+    </div>
   );
 }

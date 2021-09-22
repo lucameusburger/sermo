@@ -66,7 +66,7 @@ function AddArticle() {
   }
 
   return (
-    <>
+    <div>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Container>
           <h1>Add article</h1>
@@ -101,7 +101,7 @@ function AddArticle() {
           </Link>
         </Modal.Body>
       </Modal>
-    </>
+    </div>
   );
 }
 

@@ -35,25 +35,23 @@ function App() {
 
   return (
     <Router>
-      <>
-        <Navigation />
-        <Container style={{ marginTop: '.5rem', marginBottom: 'calc(54px + .5rem)' }}>
-          <Switch>
-            <Route path="/login/" exact component={Login}></Route>
-            <Route path="/register/" exact component={Register} />
-            <Route path="/" exact component={Feed} />
-            <Route path="/settings/" component={Settings} />
-            <Route path="/add-article/">{auth ? <AddArticle /> : <Redirect to="/" />}</Route>
-            <Route path="/search/" component={Search} />
-            <Route path="/articles/" exact component={Feed} />
-            <Route path="/articles/:id" component={ArticleView} />
-            <Route path="/users/" exact component={Users} />
-            <Route path="/users/:id" component={UserView} />
-            <Route path="/profile/">{auth ? <Profile /> : <Redirect to="/" />}</Route>
-            <Route path="/profile-edit/">{auth ? <ProfileEdit /> : <Redirect to="/" />}</Route>
-          </Switch>
-        </Container>
-      </>
+      <Navigation />
+      <Container style={{ marginTop: '.5rem', marginBottom: 'calc(54px + .5rem)' }}>
+        <Switch>
+          <Route path="/login/" exact component={Login}></Route>
+          <Route path="/register/" exact component={Register} />
+          <Route path="/" exact component={Feed} />
+          <Route path="/settings/" component={Settings} />
+          <Route path="/add-article/">{auth ? <AddArticle /> : <Redirect to="/" />}</Route>
+          <Route path="/search/" component={Search} />
+          <Route path="/articles/" exact component={Feed} />
+          <Route path="/articles/:id" component={ArticleView} />
+          <Route path="/users/" exact component={Users} />
+          <Route path="/users/:id" component={UserView} />
+          <Route path="/profile/">{auth ? <Profile /> : <Redirect to="/" />}</Route>
+          <Route path="/profile-edit/">{auth ? <ProfileEdit /> : <Redirect to="/" />}</Route>
+        </Switch>
+      </Container>
     </Router>
   );
 }

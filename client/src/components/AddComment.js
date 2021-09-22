@@ -41,21 +41,19 @@ export default function AddComment({ article, updater }) {
   }
 
   return (
-    <>
-      <Form>
-        <Row>
-          <Col sm="8" md="10">
-            <FormGroup controlId="formGroupTitle" className="my-2">
-              <FormControl type="text" placeholder="Enter comment" ref={contentRef} name="content" required />
-            </FormGroup>
-          </Col>
-          <Col sm="4" md="2">
-            <Button type="button" onClick={handleAddComment} variant="dark" className="my-2 w-100">
-              Post
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </>
+    <Form>
+      <Row>
+        <Col sm="8" md="10">
+          <FormGroup controlId="formGroupTitle" className="my-2">
+            <FormControl type="text" placeholder="Enter comment" ref={contentRef} name="content" required />
+          </FormGroup>
+        </Col>
+        <Col sm="4" md="2">
+          <Button type="button" onClick={handleAddComment} variant="dark" className="my-2 w-100">
+            Post
+          </Button>
+        </Col>
+      </Row>
+    </Form>
   );
 }

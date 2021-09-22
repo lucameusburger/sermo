@@ -34,13 +34,11 @@ function UserView({ match }) {
   };
 
   return (
-    <>
-      <Container>
-        <User user={user} />
-        <FormLabel>Articles</FormLabel>
-        <ArticlesList articles={articles} mode="smpost" />
-      </Container>
-    </>
+    <Container>
+      <User user={user} />
+      <FormLabel>Articles</FormLabel>
+      <ArticlesList articles={articles} mode="smpost" />
+    </Container>
   );
 }
 

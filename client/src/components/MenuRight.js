@@ -34,7 +34,7 @@ export default function MenuRight({}) {
   }
 
   return (
-    <>
+    <div>
       <Card className="mb-2" bg="dark" text="white">
         <Card.Body className="p-2">
           <Form onKeyDown={handleSearch} onSubmit={submitSearch}>
@@ -57,6 +57,6 @@ export default function MenuRight({}) {
         </Card.Body>
       </Card>
       <ArticlesList articles={articles} mode="side" />
-    </>
+    </div>
   );
 }

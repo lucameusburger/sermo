@@ -25,11 +25,9 @@ function Profile() {
   };
 
   return (
-    <>
-      <Container>
-        <User user={user} />
-      </Container>
-    </>
+    <Container>
+      <User user={user} />
+    </Container>
   );
 }
 

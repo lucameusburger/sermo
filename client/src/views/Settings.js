@@ -5,11 +5,9 @@ import Container from 'react-bootstrap/Container';
 
 function Settings() {
   return (
-    <>
-      <Container>
-        <h1>Settings</h1>
-      </Container>
-    </>
+    <Container>
+      <h1>Settings</h1>
+    </Container>
   );
 }
 

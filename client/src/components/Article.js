@@ -88,7 +88,7 @@ export default function Article({ article, mode = 'md' }) {
         break;
       case 'smpost':
         return (
-          <>
+          <div>
             <p className="mt-1 mb-0">{articleState.content}</p>
             <div>
               <small className="text-muted">
@@ -97,13 +97,13 @@ export default function Article({ article, mode = 'md' }) {
             </div>
             <FontAwesomeIcon className={articleState.likedByUser ? 'btn-icn-liked text-primary' : 'btn-icn'} onClick={handleLike} icon={faThumbsUp} /> {articleState.likeCount}
             <FontAwesomeIcon className="ms-2" icon={faComment} /> {articleState.commentCount}
-          </>
+          </div>
         );
         break;
 
       default:
         return (
-          <>
+          <div>
             <p className="mt-1 mb-0">{articleState.content}</p>
             <div>
               <small className="text-muted">
@@ -114,7 +114,7 @@ export default function Article({ article, mode = 'md' }) {
               <FontAwesomeIcon className={articleState.likedByUser ? 'btn-icn-liked text-primary' : 'btn-icn'} onClick={handleLike} icon={faThumbsUp} /> {articleState.likeCount}
               <FontAwesomeIcon className="ms-2" icon={faComment} /> {articleState.commentCount}
             </div>
-          </>
+          </div>
         );
         break;
     }

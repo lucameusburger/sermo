@@ -36,14 +36,12 @@ function ArticleView({ match }) {
   };
 
   return (
-    <>
-      <Container>
-        <Article key={article._id} article={article} mode="lg" updater={setUpdateComments} />
-        <FormLabel>Comments</FormLabel>
-        <AddComment article={article} updater={setUpdateComments} />
-        <CommentsList comments={comments} />
-      </Container>
-    </>
+    <Container>
+      <Article key={article._id} article={article} mode="lg" updater={setUpdateComments} />
+      <FormLabel>Comments</FormLabel>
+      <AddComment article={article} updater={setUpdateComments} />
+      <CommentsList comments={comments} />
+    </Container>
   );
 }
 

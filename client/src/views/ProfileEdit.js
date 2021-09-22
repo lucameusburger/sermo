@@ -25,11 +25,9 @@ function ProfileEdit() {
   };
 
   return (
-    <>
-      <Container>
-        <UserEdit user={user} />
-      </Container>
-    </>
+    <Container>
+      <UserEdit user={user} />
+    </Container>
   );
 }
 

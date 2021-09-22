@@ -67,7 +67,7 @@ export default function UserEdit({ user }) {
   }
 
   return (
-    <>
+    <div>
       <Form>
         <FormGroup controlId="formGroupUsername" className="my-2">
           <FormLabel>Username</FormLabel>
@@ -110,6 +110,6 @@ export default function UserEdit({ user }) {
           </Button>
         </Link>
       </Form>
-    </>
+    </div>
   );
 }

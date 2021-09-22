@@ -53,7 +53,7 @@ function Register() {
   }
 
   return (
-    <>
+    <div>
       <Container className="w-banner">
         <h1>Register</h1>
         <img src="./illustrations/election/elections_02.svg" alt="Login illustration" className="img-banner" />
@@ -104,7 +104,7 @@ function Register() {
           </Link>
         </Modal.Body>
       </Modal>
-    </>
+    </div>
   );
 }
 
