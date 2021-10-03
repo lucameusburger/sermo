@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentAlt, faFeatherAlt, faUsers, faUserPlus, faCogs, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -8,8 +8,18 @@ import Axios from 'axios';
 const axiosInst = Axios.create({ withCredentials: true });
 
 export default function Navigation() {
+  const [showNav, setShowNav] = useState('');
   const [user, setUser] = useState({});
   const [loggedImg, setLoggedImg] = useState('https://avatars.dicebear.com/api/personas/' + Math.random() + '.svg');
+
+  useEffect(() => {
+    const loc = window.location.pathname;
+    if (loc == '/register' || loc == '/login') {
+      setShowNav('d-none');
+    } else {
+      setShowNav('');
+    }
+  }, [window.location.pathname]);
 
   function handleLogged(e) {
     axiosInst
@@ -18,7 +28,7 @@ export default function Navigation() {
         if (response.data.user) {
           setUser(response.data.user);
           setLoggedImg('http://localhost:3000/uploads/users/' + response.data.user._id + '/' + response.data.user.defaultImg);
-          if (response.data.user.defaultImg == null) setLoggedImg('https://avatars.dicebear.com/api/personas/' + response.data.user._id + '.svg');
+          if (response.data.user.defaultImg == null) setLoggedImg('https://avatars.dicebear.com/api/personas/' + response.data.user.username + '.svg');
         }
       })
       .catch(function (error) {});
@@ -33,7 +43,7 @@ export default function Navigation() {
   const authenticateNav = () => {
     if (user._id) {
       return (
-        <Nav>
+        <Nav variant="dark">
           <NavDropdown
             align="end"
             id="nav-dropdown-dark-example"
@@ -45,11 +55,8 @@ export default function Navigation() {
             }
             menuVariant="dark"
           >
-            <Link className="dropdown-item" to="./profile">
-              Profile
-            </Link>
-            <Link className="dropdown-item" to="./profile-edit">
-              Edit profile
+            <Link className="dropdown-item" to={'/' + user.username}>
+              Your profile
             </Link>
             <NavDropdown.Divider />
             <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
@@ -68,9 +75,9 @@ export default function Navigation() {
   };
 
   return (
-    <div>
+    <div className={showNav}>
       <Navbar onLoad={handleLogged} fixed="top" bg="dark" variant="dark">
-        <Container>
+        <Container fluid="xxl">
           <Link className="no-style" to={''}>
             <Navbar.Brand>
               <img src={logo} width="30" height="30" className="d-inline-block align-top" alt="SERMO logo" /> SERMO

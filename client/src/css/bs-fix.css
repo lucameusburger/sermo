@@ -1,6 +1,15 @@
+:root {
+  --bs-secondary: #30363d;
+  --bs-dark: #ffffff;
+}
+
 .card,
 .badge {
-  border: none;
+  background: none !important;
+  border-color: #30363d;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 6px;
 }
 
 .dropdown-toggle::after {

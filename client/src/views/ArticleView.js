@@ -19,7 +19,6 @@ function ArticleView({ match }) {
   useEffect(() => {
     fetchArticle();
     fetchComments();
-    console.log('updateeeee');
     setUpdateComments(false);
   }, [updateComments]);
 
@@ -36,12 +35,12 @@ function ArticleView({ match }) {
   };
 
   return (
-    <Container>
+    <div>
       <Article key={article._id} article={article} mode="lg" updater={setUpdateComments} />
       <FormLabel>Comments</FormLabel>
       <AddComment article={article} updater={setUpdateComments} />
       <CommentsList comments={comments} />
-    </Container>
+    </div>
   );
 }
 

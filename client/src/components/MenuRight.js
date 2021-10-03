@@ -35,15 +35,15 @@ export default function MenuRight({}) {
 
   return (
     <div>
-      <Card className="mb-2" bg="dark" text="white">
+      <Card className="mb-3">
         <Card.Body className="p-2">
           <Form onKeyDown={handleSearch} onSubmit={submitSearch}>
             <Row>
               <Col md="8" xxl="10">
-                <Form.Control className="border-0 py-2 bg-dark text-white" required type="text" placeholder="Search" ref={menuRightSearchRef} />
+                <Form.Control className="border-0 py-2" required type="text" placeholder="Search" ref={menuRightSearchRef} />
               </Col>
               <Col md="4" xxl="2">
-                <Button variant="light" className="w-100" type="submit">
+                <Button variant="dark" className="w-100" type="submit">
                   <FontAwesomeIcon icon={faSearch} />
                 </Button>
               </Col>
@@ -51,11 +51,7 @@ export default function MenuRight({}) {
           </Form>
         </Card.Body>
       </Card>
-      <Card className="mb-2" bg="dark" text="white">
-        <Card.Body>
-          <b>Trending</b>
-        </Card.Body>
-      </Card>
+      <h3 className="fs-5">Trending</h3>
       <ArticlesList articles={articles} mode="side" />
     </div>
   );

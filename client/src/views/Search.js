@@ -55,22 +55,20 @@ function Search(match) {
   }
 
   return (
-    <Container>
-      <h1>Search</h1>
+    <div>
+      <h1 className="fs-5">Search</h1>
       <Row>
         <Col sm="8" md="10">
-          <FormGroup controlId="formGroupSearch" className="my-2">
-            <FormControl type="text" placeholder="Search for something" onChange={handleSearch} ref={searchRef} name="content" defaultValue={searchParam} required />
-          </FormGroup>
+          <FormControl type="text" placeholder="Search for something" onChange={handleSearch} ref={searchRef} name="content" defaultValue={searchParam} required />
         </Col>
         <Col sm="4" md="2">
-          <Button type="button" onClick={handleSearch} variant="dark" className="my-2 w-100">
+          <Button type="button" onClick={handleSearch} variant="dark" className="w-100">
             Search
           </Button>
         </Col>
       </Row>
       <SearchResults articles={articles} comments={comments} users={users} active={searchActive} />
-    </Container>
+    </div>
   );
 }
 

@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ArticlesList from '../components/ArticlesList';
 import MenuRight from '../components/MenuRight';
-import Navigation from '../components/Navigation';
+import AddArticle from '../components/AddArticle';
 import Axios from 'axios';
 
 import { Row, Col, Button } from 'react-bootstrap';
@@ -18,21 +18,24 @@ function Feed() {
 
   const fetchArticles = async () => {
     axiosInst.get('http://localhost:3001/articles').then((response) => {
+      console.log(response);
       setArticles(response.data);
     });
   };
 
   return (
-    <Container>
+    <div>
+      <h1 className="fs-5">Feed</h1>
       <Row>
-        <Col lg="8">
-          <ArticlesList articles={articles} />
+        <Col className="" lg="8">
+          <AddArticle />
+          <ArticlesList articles={articles} editable="true" />
         </Col>
-        <Col lg="4" className="d-none d-lg-block psgfjdgs-0">
+        <Col lg="4" className="d-none d-lg-block ps-0">
           <MenuRight></MenuRight>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 }
 

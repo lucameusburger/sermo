@@ -32,7 +32,10 @@ body {
 }
 
 .w-banner {
-  max-width: 600px;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  margin: auto;
 }
 
 .img-banner {
@@ -71,6 +74,13 @@ body {
   height: 12rem;
 }
 
+.img-user-profile {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
 .img-profile {
   width: 7rem;
   height: 7rem;
@@ -93,6 +103,10 @@ body {
 
 .bg-darker {
   background-color: #18191a;
+}
+
+.bg-darkblue {
+  background-color: #0d1117;
 }
 
 .btn-icn {

@@ -241,12 +241,21 @@ app.get('/articles/', async (req, res) => {
     .sort({ timestamp: -1 })
     .limit(20)
     .exec(function (err, result) {
-      if (err) res.send(err);
+      if (err) {
+        res.send(err);
+        return;
+      }
+      if (!result) {
+        res.send({});
+        return;
+      }
       resultJson = JSON.parse(JSON.stringify(result));
       resultJson = resultJson.map(function (article) {
-        article.likedByUser = false;
+        article.byCurrentUser = false;
+        article.likedByCurrentUser = false;
         if (req.user) {
-          article.likedByUser = article.likes.includes(String(req.user._id));
+          article.likedByCurrentUser = article.likes.includes(String(req.user._id));
+          article.byCurrentUser = article.user._id == req.user._id ? true : false;
         }
         return article;
       });
@@ -269,51 +278,110 @@ app.get('/articles/top/', async (req, res) => {
 //get article
 app.get('/articles/*', async (req, res) => {
   let articleId = req._parsedUrl.pathname.substring(req._parsedUrl.pathname.lastIndexOf('/articles/') + 10, req._parsedUrl.pathname.length);
-
   Article.findOne({ _id: articleId })
     .populate('user', ['username', 'defaultImg'])
     .populate('comments')
     .exec(function (err, result) {
-      Comment.find()
-        .where('article', articleId)
-        .exec((errArticles, resArticles) => {
-          if (err) res.send(err);
-          res.send(result);
-        });
+      resultJson = JSON.parse(JSON.stringify(result));
+      resultJson.byCurrentUser = false;
+      resultJson.likedByCurrentUser = false;
+      if (req.user) {
+        resultJson.likedByCurrentUser = resultJson.likes.includes(String(req.user._id));
+        resultJson.byCurrentUser = resultJson.user._id == req.user._id ? true : false;
+      }
+      res.json(resultJson);
     });
+});
+// delete article
+app.delete('/articles/*', isLoggedIn, async (req, res) => {
+  try {
+    const op = await Article.deleteOne({ _id: req.params[0] });
+    if (op.ok && op.n) {
+      console.log('success delete');
+      res.send({ success: true, error: null, msg: 'Deleted article' });
+      return;
+    }
+    console.log(err);
+    res.send({ success: false, error: 'No matches', msg: 'Failed to delete article' });
+    return;
+  } catch (err) {
+    console.log(err);
+    res.send({ success: false, error: err, msg: 'Failed to delete article' });
+    return;
+  }
 });
 // post article
 app.post('/articles/', isLoggedIn, async (req, res) => {
-  const title = req.body.title;
   const content = req.body.content;
-  const article = new Article({ title: title, content: content, user: req.user });
+  const article = new Article({ content: content, user: req.user });
   try {
     await article.save();
-    res.send({ success: true, article: result, error: null, msg: 'Saved new Article!' });
     console.log('saved new article');
+    res.send({ success: true, article: result, error: null, msg: 'Saved new Article!' });
   } catch (err) {
     console.log(err);
   }
+});
+//get user by id
+app.get('/users/*', async (req, res) => {
+  console.log('finde user by der id');
+  User.findOne({ _id: req.params[0] }).exec(function (err, result) {
+    if (err) {
+      res.send({});
+      return;
+    }
+
+    resultJson = JSON.parse(JSON.stringify(result));
+    resultJson.followedByCurrentUser = false;
+    if (req.user) {
+      resultJson.followedByCurrentUser = resultJson.followers.includes(String(req.user._id));
+    }
+
+    res.json(resultJson);
+  });
 });
 //get users
 app.get('/users/', async (req, res) => {
   console.log(req.query);
   let filter = {};
-
   User.find(filter)
     .sort({ timestamp: -1 })
     .limit(20)
     .exec(function (err, result) {
-      if (err) res.send(err);
-      res.send(result);
+      // error
+      if (err) {
+        res.send(err);
+        return;
+      }
+      // modify result
+      resultJson = JSON.parse(JSON.stringify(result));
+      resultJson = resultJson.map(function (user) {
+        user.followedByCurrentUser = false;
+        if (req.user) {
+          user.followedByCurrentUser = user.followers.includes(String(req.user._id));
+        }
+        return article;
+      });
+      // send result
+      res.json(resultJson);
     });
 });
 //get user
-app.get('/users/*', async (req, res) => {
-  let userId = req._parsedUrl.pathname.substring(req._parsedUrl.pathname.lastIndexOf('/users/') + 7, req._parsedUrl.pathname.length);
-  User.findOne({ _id: userId }).exec(function (err, result) {
-    if (err) res.send({});
-    res.send(result);
+app.get('/*', async (req, res) => {
+  User.findOne({ username: req.params[0] }).exec(function (err, result) {
+    // error
+    if (err) {
+      res.send({});
+      return;
+    }
+    // modify result
+    resultJson = JSON.parse(JSON.stringify(result));
+    resultJson.followedByCurrentUser = false;
+    if (req.user) {
+      resultJson.followedByCurrentUser = resultJson.followers.includes(String(req.user._id));
+    }
+    // send result
+    res.json(resultJson);
   });
 });
 //get profile
@@ -379,6 +447,45 @@ app.post('/like/', isLoggedIn, async (req, res) => {
   });
 });
 
+// follow user
+app.post('/follow/', isLoggedIn, async (req, res) => {
+  let action = {
+    $inc: { followersCount: 1 },
+    $push: { followers: req.user._id },
+  };
+
+  const followUser = () => {
+    try {
+      User.updateOne({ _id: req.body.user }, action, function (error, result) {
+        if (error) {
+          res.send({ success: false, user: null, error: error, msg: 'Failed to follow/unfollow' });
+        }
+        res.send({ success: true, user: result, error: null, msg: 'Followed/unfollowed!' });
+      });
+    } catch (err) {
+      res.send({ success: false, user: null, error: err, msg: 'Failed to follow/unfollow' });
+    }
+  };
+
+  User.findOne(
+    { _id: req.body.user },
+    {
+      followers: { $elemMatch: { $eq: req.user } },
+    }
+  ).exec(function (error, result) {
+    if (error) {
+      res.send({ success: false, error: error, msg: 'Failed to follow' });
+    }
+    if (result.followers.length) {
+      action = {
+        $inc: { followersCount: -1 },
+        $pull: { followers: req.user._id },
+      };
+    }
+    followUser();
+  });
+});
+
 //update profile
 app.put('/updateProfile', isLoggedIn, upload.single('img'), function (req, res, next) {
   let update = {
@@ -402,7 +509,6 @@ app.put('/updateProfile', isLoggedIn, upload.single('img'), function (req, res, 
         console.log(result);
       }
     });
-    console.log('updated user');
     let oldDir = 'tmp/' + req.file.filename;
     let newDir = '../client/public/uploads/users/' + req.user._id + '/';
     if (!fs.existsSync(newDir)) {

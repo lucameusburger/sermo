@@ -25,9 +25,9 @@ function ProfileEdit() {
   };
 
   return (
-    <Container>
+    <div>
       <UserEdit user={user} />
-    </Container>
+    </div>
   );
 }
 

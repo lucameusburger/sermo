@@ -104,8 +104,8 @@ export default function UserEdit({ user }) {
         <Button type="button" onClick={handleUpdate} variant="dark" className="my-2">
           Save
         </Button>{' '}
-        <Link to="/profile">
-          <Button type="button" variant="outline-dark" className="my-2">
+        <Link to={'/' + user.username}>
+          <Button type="button" variant="outline-light" className="my-2">
             Cancel
           </Button>
         </Link>

@@ -23,7 +23,8 @@ function Users() {
   };
 
   return (
-    <Container>
+    <div>
+      <h1 className="fs-5">Users</h1>
       <Row>
         <Col lg="8">
           <UsersList users={users} mode="sm" />
@@ -32,7 +33,7 @@ function Users() {
           <MenuRight></MenuRight>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 }
 

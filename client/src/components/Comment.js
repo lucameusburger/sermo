@@ -14,12 +14,12 @@ export default function Comment({ comment, mode = 'md' }) {
   let timestampOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   let timestamp = new Date(comment.timestamp).toLocaleDateString('en-US', timestampOptions);
   let userDefaultImg = 'http://localhost:3000/uploads/users/' + comment.user._id + '/' + comment.user.defaultImg;
-  if (comment.user.defaultImg == null) userDefaultImg = 'https://avatars.dicebear.com/api/personas/' + comment.user._id + '.svg';
+  if (comment.user.defaultImg == null) userDefaultImg = 'https://avatars.dicebear.com/api/personas/' + comment.user.username + '.svg';
 
   function modePre() {
     if (mode == 'sm') return;
     return (
-      <Link to={`/users/${comment.user._id}`} style={{ textDecoration: 'none', color: 'white' }}>
+      <Link to={'/' + comment.user.username} style={{ textDecoration: 'none', color: 'white' }}>
         <div className="d-flex align-items-center">
           <img className="img-thumb me-2 bg-secondary" src={userDefaultImg} alt="User image" />
           {comment.user.username}

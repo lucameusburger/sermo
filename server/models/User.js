@@ -35,7 +35,18 @@ const UserSchema = new Schema({
     type: String,
     required: false,
   },
+  followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  followersCount: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
   articles: [{ type: Schema.Types.ObjectId, ref: 'Article' }],
+  articlesCount: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
 });
 
 UserSchema.plugin(passportLocalMongoose);
