@@ -262,14 +262,14 @@ app.get('/articles/', async (req, res) => {
       res.json(resultJson);
     });
 });
-//get articles
+//get top articles
 app.get('/articles/top/', async (req, res) => {
   let filter = {};
   if (req.query.user) filter.user = req.query.user;
   Article.find(filter)
     .populate('user', ['username', 'defaultImg'])
-    .sort({ timestamp: -1 })
-    .limit(5)
+    .sort({ likeCount: -1 })
+    .limit(10)
     .exec(function (err, result) {
       if (err) res.send(err);
       res.send(result);
@@ -360,7 +360,7 @@ app.get('/users/', async (req, res) => {
         if (req.user) {
           user.followedByCurrentUser = user.followers.includes(String(req.user._id));
         }
-        return article;
+        return user;
       });
       // send result
       res.json(resultJson);
@@ -374,14 +374,16 @@ app.get('/*', async (req, res) => {
       res.send({});
       return;
     }
-    // modify result
-    resultJson = JSON.parse(JSON.stringify(result));
-    resultJson.followedByCurrentUser = false;
-    if (req.user) {
-      resultJson.followedByCurrentUser = resultJson.followers.includes(String(req.user._id));
+    if (result) {
+      // modify result
+      resultJson = JSON.parse(JSON.stringify(result));
+      resultJson.followedByCurrentUser = false;
+      if (req.user) {
+        resultJson.followedByCurrentUser = resultJson.followers.includes(String(req.user._id));
+      }
+      // send result
+      res.json(resultJson);
     }
-    // send result
-    res.json(resultJson);
   });
 });
 //get profile

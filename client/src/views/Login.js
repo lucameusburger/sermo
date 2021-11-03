@@ -2,13 +2,14 @@ import React, { useState, useRef, forwardRef, useEffect, useImperativeHandle } f
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import logo from '../img/logo-white.svg';
-import Navigation from '../components/Navigation';
+import { useUser, useUserUpdate } from '../hooks/UserContext';
 
 import { Row, Col, Button, FormControl, FormLabel, FormGroup, Card, Form, Container, Feedback } from 'react-bootstrap';
 
 const axiosInst = Axios.create({ withCredentials: true });
 
 function Login() {
+  const setAuthUser = useUserUpdate();
   const usernameRef = useRef();
   const passwordRef = useRef();
   const [validated, setValidated] = useState(false);
@@ -38,9 +39,6 @@ function Login() {
       .then(function () {
         console.log('alwayss');
       });
-
-    //usernameRef.current.value = null;
-    //passwordRef.current.value = null;
   }
 
   return (

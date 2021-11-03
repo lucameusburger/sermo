@@ -4,35 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentAlt, faFeatherAlt, faUsers, faUserPlus, faCogs, faSearch } from '@fortawesome/free-solid-svg-icons';
 import logo from '../img/logo-white.svg';
 import { Nav, Dropdown, NavDropdown, Button, Row, Col, Container, Navbar } from 'react-bootstrap';
+import { useUser, useUserUpdate } from '../hooks/UserContext';
 import Axios from 'axios';
 const axiosInst = Axios.create({ withCredentials: true });
 
 export default function Navigation() {
-  const [showNav, setShowNav] = useState('');
-  const [user, setUser] = useState({});
-  const [loggedImg, setLoggedImg] = useState('https://avatars.dicebear.com/api/personas/' + Math.random() + '.svg');
-
-  useEffect(() => {
-    const loc = window.location.pathname;
-    if (loc == '/register' || loc == '/login') {
-      setShowNav('d-none');
-    } else {
-      setShowNav('');
-    }
-  }, [window.location.pathname]);
-
-  function handleLogged(e) {
-    axiosInst
-      .post('http://localhost:3001/checkLogged')
-      .then(function (response) {
-        if (response.data.user) {
-          setUser(response.data.user);
-          setLoggedImg('http://localhost:3000/uploads/users/' + response.data.user._id + '/' + response.data.user.defaultImg);
-          if (response.data.user.defaultImg == null) setLoggedImg('https://avatars.dicebear.com/api/personas/' + response.data.user.username + '.svg');
-        }
-      })
-      .catch(function (error) {});
-  }
+  const authUser = useUser();
+  const setAuthUser = useUserUpdate();
+  const defaultAvatar = 'https://avatars.dicebear.com/api/personas/' + Math.random() + '.svg';
 
   function handleLogout(e) {
     axiosInst.post('http://localhost:3001/logout').then(function (response) {
@@ -41,7 +20,7 @@ export default function Navigation() {
   }
 
   const authenticateNav = () => {
-    if (user._id) {
+    if (authUser._id) {
       return (
         <Nav variant="dark">
           <NavDropdown
@@ -49,13 +28,13 @@ export default function Navigation() {
             id="nav-dropdown-dark-example"
             title={
               <div>
-                {user.username || 'login'}
-                <img className="img-thumb ms-2 bg-secondary hide-text-img-thumb" src={loggedImg} alt="User image" />
+                {authUser.username || 'login'}
+                <img className="img-thumb ms-2 bg-secondary hide-text-img-thumb" src={authUser.defaultImg ? 'http://localhost:3000/uploads/users/' + authUser._id + '/' + authUser.defaultImg : defaultAvatar} alt="User image" />
               </div>
             }
             menuVariant="dark"
           >
-            <Link className="dropdown-item" to={'/' + user.username}>
+            <Link className="dropdown-item" to={'/' + authUser.username}>
               Your profile
             </Link>
             <NavDropdown.Divider />
@@ -68,15 +47,15 @@ export default function Navigation() {
       <Nav>
         <Link className="no-style nav-link" to="/login">
           login
-          <img className="img-thumb ms-2 bg-secondary hide-text-img-thumb" src={loggedImg} alt="User image" />
+          <img className="img-thumb ms-2 bg-secondary hide-text-img-thumb" src={authUser.defaultImg ? 'http://localhost:3000/uploads/users/' + authUser._id + '/' + authUser.defaultImg : defaultAvatar} alt="User image" />
         </Link>
       </Nav>
     );
   };
 
   return (
-    <div className={showNav}>
-      <Navbar onLoad={handleLogged} fixed="top" bg="dark" variant="dark">
+    <div>
+      <Navbar onLoad={setAuthUser} fixed="top" bg="dark" variant="dark">
         <Container fluid="xxl">
           <Link className="no-style" to={''}>
             <Navbar.Brand>
